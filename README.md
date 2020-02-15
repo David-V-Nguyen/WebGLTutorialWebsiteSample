@@ -1,14 +1,20 @@
 # WebGL Tutorial project
 
+Author: David Nguyen
+Creation Date: 15/02/2020
+
 <p>
 WebGL is an API which runs on OpenGL allowing computer graphics to be rendered on a HTML canvas
 <br>
+
 This project is going to contain all the code regarding the usage of WebGL
 and how it can be applied to designing unique portfolio websites
 <br>
+
 Learn something new and cool today!
 <br>
-You can follow the instructions in <a href="#Getting Started"></a> alongside to learn aswell
+
+You can follow the instructions in <a href="#Getting Started"></a> alongside to learn as well
 </p>
 
 # Getting Started
@@ -33,8 +39,8 @@ Create a directory (folder) named "WebGLTutorial" using [mkdir WebGLTutorial]
 
 Next enter that folder using [cd WebGLTutorial] and create a html file called "index.html"
 using [code index.html]
-
 <br>
+
 This will bring up VsCode with your file and save it
 </p>
 <br>
@@ -87,8 +93,6 @@ There are endless possiblities to create and design unique artifacts
 <br>
 
 
+
+
 </p>
-
-
-
-
