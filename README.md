@@ -1,7 +1,12 @@
 # WebGL Tutorial project
 
+<p>
 Author: David Nguyen
+<br>
+
 Creation Date: 15/02/2020
+</p>
+<br>
 
 <p>
 WebGL is an API which runs on OpenGL allowing computer graphics to be rendered on a HTML canvas
@@ -41,9 +46,20 @@ Next enter that folder using [cd WebGLTutorial] and create a html file called "i
 using [code index.html]
 <br>
 
-This will bring up VsCode with your file and save it
+This will bring up VSCode with your file selected and save it
+<br>
+
+Once done you can create a naked HTML web page and use the VSCode UI to create more files
+<br>
+
+Create a [javascript.js] file and a [Css.css] file using the VSCode file explorer, save them
+<br>
+
+
 </p>
 <br>
+
+
 
 <h2>Main files to view</h2>
 <p>
