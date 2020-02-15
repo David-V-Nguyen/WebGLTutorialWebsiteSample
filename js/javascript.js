@@ -133,5 +133,53 @@ const programInfo = {
 
     drawScene(gl, programInfo, buffers);
 
+//
+//  InitBuffers
+//    
+// Initialize the buffers needed, just have one object (simple 2D square)
+//
+
+function initBuffers(gl) {
+    
+    // create buffer for the square's positions
+
+    const positionBuffer = gl.createBuffer();
+
+    // select the positionBuffer as the one to apply buffer operations to
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+    const positions = [
+        1.0, 1.0, 
+        -1.0, 1.0,    
+        1.0, -1.0,     
+        -1.0, -1.0,   
+    ];
+
+    // Now pass the list of positions into WebGL to build the shape
+    // By creating a FLoat32Array from the javaScript array, use it to fill current buffer
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+    // set up the colours for the vertices
+
+    var colors = [
+        1.0, 1.0, 1.0, 1.0,     // white
+        1.0, 0.0, 0.0, 1.0,     // red
+        0.0, 1.0, 1.0, 1.0,     // green
+        0.0, 0.0, 1.0, 1.0,     // blue
+    ];
+
+    const colorBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
+
+    return {
+        position: positionBuffer,
+        color: colorBuffer,
+    };
+}
+
+
 
 window.onload = main;
