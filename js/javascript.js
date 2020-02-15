@@ -1,10 +1,14 @@
 /* Javascript code for WebGL tutorial website
 *WebGL application
 *Author: David Nguyen 
-*Version: 1.1
+*Version: 1.2
 *Date: 15/02/2020
 *
 */
+
+//
+// Start here
+//
 
 function main() {
     const canvas = document.querySelector("#glCanvas");
@@ -24,15 +28,21 @@ function main() {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
 }
+
 // Vertex sharder program
+
 const vsSource = `
     attribute vec4 aVertexPosition;
+    attribute vec4 aVertexColor;
 
     uniform mat4 uModelViewMatrix;
     uniform mat4 uProjectionMatrix;
 
+    
+
     void main() {
         gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+        vColor = aVertexColor;
     }
 `;
 
@@ -42,28 +52,7 @@ const fsSource = `
     }
 `;
 
-// Initialize a shader program, so WebGL knows how to draw our data 
-
-function initShaderProgram(gl, vsSource, fsSource) {
-    const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
-    const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
-
-    // Create the shader program
-
-    const shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    gl.linkProgram(shaderProgram);
-
-    // if creating the shader program failed, show alert
-    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-        alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
-        return null;
-    }
-    return shaderProgram;
-}
-
-// Creates a shader of the given type, uploads the source and complies it
+// Creates a shader of the given type, uploads the source and compiles it
 
 function loadShader(gl, type, source) {
     const shader = gl.createShader(type);
@@ -82,8 +71,67 @@ function loadShader(gl, type, source) {
         alert('An error occurred compiling the shaders: ' + gl.getShaderInfoLog(shader));
         gl.deleteShader(shader);
         return null;
-      }
-      
-      return shader;
+    }
+
+    return shader;
 }
+
+// Vertex shader program
+
+const vsSource = `
+    attribute vec4 aVertexPosition;
+    attribute vec4 aVertexColor;
+
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
+
+    varying lowp vec4 vColor;
+
+    void main(void) {
+      gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+      vColor = aVertexColor;
+    }
+`;
+
+    // Fragment shader program
+
+const fsSource = `
+    varying lowp vec4 vColor;
+
+    void main(void) {
+      gl_FragColor = vColor;
+    }
+`;
+
+// Initialize shader program - Lighting for vertices and so forth is established
+
+const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+
+
+// Collect all info needed to use shader program
+// Look up which attributes our shader program is using for aVertexPosition, aVertexColor
+// also look up uniform locations 
+
+const programInfo = {
+    program: shaderProgram,
+    attribLocations: {
+        vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
+        vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+    },
+
+    uniformLocations: {
+        projectionMatrix: gl.getUniformLocation(shaderProgram, 'uProjectionMatrix'),
+        modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+    },
+};
+
+    // Where we call the routine that builds all the objects to be drawn
+
+    const buffers = initBuffers(gl);
+
+    // Draw the scene
+
+    drawScene(gl, programInfo, buffers);
+
+
 window.onload = main;
