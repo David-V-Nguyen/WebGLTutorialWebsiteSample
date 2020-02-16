@@ -318,6 +318,30 @@ function initShaderProgram(gl, vsSource, fsSource) {
     return shaderProgram;
 }
 
+//
+// creates a shader of the given type, uploads the source and compiles it 
+//
 
+function loadShader(gl, type, source) {
+    const shader = gl.createShader(type);
+
+    // send the source to the shader object
+
+    gl.shaderSource(shader, source);
+
+    // compile the shader program
+
+    gl.compileShader(shader);
+
+    // see if it compiled successfully
+
+    if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
+        alert('An error occurred compilling the shaders: ' + gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+    }
+
+    return shader;
+}
 
 window.onload = main;
